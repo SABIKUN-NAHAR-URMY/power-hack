@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+    const [allBillingList, setAllBillingList] = useState([]);
+    let sum = 0;
+
+    useEffect(() => {
+        fetch('http://localhost:5000/billing-list')
+            .then(res => res.json())
+            .then(data => setAllBillingList(data))
+    }, []);
+
+    const allPaidAmount = allBillingList.map(bill => bill.paidAmount);
+
+    allPaidAmount.map(data => sum = sum + parseInt(data));
+
     const menuItem = <>
-    <li><Link to='/'>Home</Link></li>
-    <li><Link to='/billing-list'>BillingPage</Link></li>
-    <li><Link to='/login'>Login</Link></li>
-    <li><Link to='/registration'>Register</Link></li>
+        <li className='text-xl'><Link to='/'>Home</Link></li>
+        <li className='text-xl'><Link to='/billing-list'>BillingPage</Link></li>
+        <li className='text-xl'><Link to='/login'>Login</Link></li>
+        <li className='text-xl'><Link to='/registration'>Register</Link></li>
     </>
     return (
         <div className="navbar bg-base-100">
@@ -30,8 +43,8 @@ const Header = () => {
                     }
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn">Get started</a>
+            <div className="navbar-end pr-5">
+                <p className='text-xl font-bold'>Paid Amount: {sum}</p>
             </div>
         </div>
     );

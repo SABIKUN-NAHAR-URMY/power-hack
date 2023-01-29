@@ -19,7 +19,8 @@ const BillingPage = () => {
             fullName: data.fullName,
             email: data.email,
             phone: data.phone,
-            paidAmount: data.paidAmount
+            paidAmount: data.paidAmount,
+            dateAndTime: new Date()
         }
 
         fetch('http://localhost:5000/add-billing', {
@@ -108,6 +109,7 @@ return (
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Paid Amount</th>
+                            <th>Date/Time</th>
                             <th>Action</th>
                         </tr>
                     </thead>

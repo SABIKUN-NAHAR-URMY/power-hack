@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AllBillingList = ({ billingList }) => {
-    const { fullName, email, phone, paidAmount } = billingList;
+    const { fullName, email, phone, paidAmount, dateAndTime } = billingList;
     return (
         <tr>
             <th></th>
@@ -9,6 +9,7 @@ const AllBillingList = ({ billingList }) => {
             <td>{email}</td>
             <td>{phone}</td>
             <td>{paidAmount}</td>
+            <td>{dateAndTime}</td>
             <td><span className='btn'>Edit</span> | <span className='btn'>Delete</span></td>
         </tr>
     );
