@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AllBillingList = ({ billingList }) => {
-    const { fullName, email, phone, paidAmount, dateAndTime } = billingList;
+    const { _id,fullName, email, phone, paidAmount, dateAndTime } = billingList;
+    const navigate = useNavigate();
+    
+    const handelUpdate = id => {
+        navigate(`/update-billing/${id}`);
+    }
+
     return (
         <tr>
             <th></th>
@@ -10,7 +17,7 @@ const AllBillingList = ({ billingList }) => {
             <td>{phone}</td>
             <td>{paidAmount}</td>
             <td>{dateAndTime}</td>
-            <td><span className='btn'>Edit</span> | <span className='btn'>Delete</span></td>
+            <td><span onClick={() => handelUpdate(_id)} className='btn'>Edit</span> | <span className='btn'>Delete</span></td>
         </tr>
     );
 };
