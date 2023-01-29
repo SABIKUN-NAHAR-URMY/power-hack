@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateBilling = () => {
     const [edit, setEdit] = useState([]);
-    const { register, formState: { errors }, handleSubmit } = useForm();
     const router = useParams();
     const { id } = router;
     const navigate = useNavigate();
@@ -16,13 +14,18 @@ const UpdateBilling = () => {
             .then(data => setEdit(data))
     }, [id]);
 
-    const handelEdit = data => {
-        console.log(data);
+    const handelEdit = event => {
+        event.preventDefault();
+        const form = event.target;
+        const fullName = form.fullName.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const paidAmount = form.paidAmount.value;
         const updateData = {
-            fullName : data.fullName,
-            email : data.email,
-            phone: data.phone,
-            paidAmount: data.paidAmount
+            fullName: fullName,
+            email: email,
+            phone: phone,
+            paidAmount: paidAmount
         }
 
         fetch(`http://localhost:5000/update-billing/${id}`, {
@@ -42,39 +45,27 @@ const UpdateBilling = () => {
     }
     return (
         <div className='w-1/2 mx-auto'>
-            <form onSubmit={handleSubmit(handelEdit)}>
+            <form onSubmit={handelEdit}>
                 {/* Full Name */}
-                <div className="form-control w-full">
-                    <label className="label"><span className="label-text">Full Name</span></label>
-                    <input type="text" defaultValue={edit.fullName}
-                        {...register("fullName",
-                            { required: "Full Name is required" })} className="input input-bordered w-full" />
-                    {errors.fullName && <p className='text-red-600'>{errors.fullName?.message}</p>}
-                </div>
+
+                <label className="label"><span className="label-text">Full Name</span></label>
+                <input type="text" name='fullName' required defaultValue={edit.fullName} className="input input-bordered w-full" />
+
                 {/* Email */}
-                <div className="form-control w-full">
-                    <label className="label"><span className="label-text">Email</span></label>
-                    <input type="email" defaultValue={edit.email}
-                        {...register("email",
-                            { required: "Email is required" })} className="input input-bordered w-full" />
-                    {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
-                </div>
+
+                <label className="label"><span className="label-text">Email</span></label>
+                <input type="email" name='email' required defaultValue={edit.email} className="input input-bordered w-full" />
+
                 {/* Phone */}
-                <div className="form-control w-full">
-                    <label className="label"><span className="label-text">Phone</span></label>
-                    <input type="text" defaultValue={edit.phone}
-                        {...register("phone",
-                            { required: "Phone is required" })} className="input input-bordered w-full" />
-                    {errors.phone && <p className='text-red-600'>{errors.phone?.message}</p>}
-                </div>
+
+                <label className="label"><span className="label-text">Phone</span></label>
+                <input type="text" name='phone' required defaultValue={edit.phone} className="input input-bordered w-full" />
+
                 {/* Paid Amount */}
-                <div className="form-control w-full">
-                    <label className="label"><span className="label-text">Paid Amount</span></label>
-                    <input type="text" defaultValue={edit.paidAmount}
-                        {...register("paidAmount",
-                            { required: "Paid Amount is required" })} className="input input-bordered w-full" />
-                    {errors.paidAmount && <p className='text-red-600'>{errors.paidAmount?.message}</p>}
-                </div>
+
+                <label className="label"><span className="label-text">Paid Amount</span></label>
+                <input type="text" name='paidAmount' required defaultValue={edit.paidAmount} className="input input-bordered w-full" />
+
                 <input className='btn w-full mt-5' value='Add New Bill' type="submit" />
 
             </form>

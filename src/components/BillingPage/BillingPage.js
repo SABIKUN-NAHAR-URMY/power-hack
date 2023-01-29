@@ -41,6 +41,25 @@ const BillingPage = () => {
             })
     }
 
+    const handelDelete = id => {
+        const proceed = window.confirm('Are you sure you want to delete this review?');
+        if (proceed) {
+            fetch(`http://localhost:5000/delete-billing/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.deletedCount > 0) {
+                        toast.success("Deleted successfully!");
+                        const remaining = allBillingList.filter(billingList => billingList._id !== id);
+                        setAllBillingList(remaining);
+                        window.location.reload();
+                    }
+                })
+        }
+    }
+
 return (
     <div className='mx-20'>
         <div className='border bg-slate-400 flex justify-between items-center p-2'>
@@ -117,7 +136,8 @@ return (
                         {
                             allBillingList.map(billingList => <AllBillingList
                             key={billingList._id}
-                            billingList={billingList}></AllBillingList>)
+                            billingList={billingList}
+                            handelDelete={handelDelete}></AllBillingList>)
                         }
                     </tbody>
                 </table>
