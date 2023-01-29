@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import AllBillingList from '../AllBillingList/AllBillingList';
 
 const BillingPage = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [allBillingList, setAllBillingList] = useState([]);
+
+    useEffect(()=>{
+        fetch('http://localhost:5000/billing-list')
+        .then(res => res.json())
+        .then(data => setAllBillingList(data))
+    },[])
 
     const handelAdd = (data) => {
         console.log(data);
@@ -39,7 +47,6 @@ return (
                 <p className='text-2xl font-bold'>Billings</p>
                 <input type="text" placeholder="Search" className="input input-bordered input-sm w-full max-w-xs" />
             </div>
-            {/* <button className='btn'>Add New Bill</button> */}
 
             <div>
                 {/* The button to open modal */}
@@ -105,14 +112,11 @@ return (
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th></th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Littel, Schaden and Vandervort</td>
-                            <td>Canada</td>
-                            <td><span className='btn'>Edit</span> | <span className='btn'>Delete</span></td>
-                        </tr>
+                        {
+                            allBillingList.map(billingList => <AllBillingList
+                            key={billingList._id}
+                            billingList={billingList}></AllBillingList>)
+                        }
                     </tbody>
                 </table>
             </div>
