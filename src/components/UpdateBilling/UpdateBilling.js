@@ -66,7 +66,7 @@ const UpdateBilling = () => {
                 <label className="label"><span className="label-text">Paid Amount</span></label>
                 <input type="text" name='paidAmount' required defaultValue={edit.paidAmount} className="input input-bordered w-full" />
 
-                <input className='btn w-full mt-5' value='Add New Bill' type="submit" />
+                <input className='btn w-full mt-5' value='Update Bill' type="submit" />
 
             </form>
         </div>

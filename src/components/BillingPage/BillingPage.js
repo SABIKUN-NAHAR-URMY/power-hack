@@ -72,8 +72,8 @@ const BillingPage = () => {
 
     return (
         <div className='mx-20'>
-            <div className='border bg-slate-400 flex justify-between items-center p-2'>
-                <div className='flex gap-5'>
+            <div className='border bg-slate-400 lg:flex justify-between items-center p-2'>
+                <div className='lg:flex gap-5'>
                     <p className='text-2xl font-bold'>Billings</p>
                     <input type="text" placeholder="Search by FullName or Phone or Email" onChange={(e) => setSearchItem(e.target.value)} className="input input-bordered input-sm w-[300px]" />
                 </div>

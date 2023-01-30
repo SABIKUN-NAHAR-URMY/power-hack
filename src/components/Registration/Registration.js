@@ -34,20 +34,16 @@ const Registration = () => {
                 console.log(data);
                 if (data.acknowledged) {
                     toast.success('Registration successfully!');
-                    users.map(user => {
-                        if(user?.email === email && user?.password === password){
-                            setCurrentUser(user.email);
-                           return navigate('/');
-                        }})
+                    setCurrentUser(users);
+                    console.log(users);
                 }
                 else {
                     toast.error('Already Registration!');
                 }
-
-                // navigate('/');
                 navigate(from, { replace: true });
             })
             .catch(error => console.error(error))
+
     }
 
     return (

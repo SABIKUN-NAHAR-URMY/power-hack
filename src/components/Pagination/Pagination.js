@@ -5,7 +5,6 @@ const Pagination = ({billingPerPage, totalBilling, paginate}) => {
     const pageNumbers = [];
     for(let i=1; i <= Math.ceil(totalBilling / billingPerPage); i++){
         pageNumbers.push(i);
-        console.log(pageNumbers);
     }
     return (
         <nav>
