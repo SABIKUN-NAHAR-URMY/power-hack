@@ -11,7 +11,9 @@ const AllBillingList = ({ billingList, handelDelete }) => {
 
     return (
         <tr>
-            <th></th>
+            <td>{
+                _id ? _id : 'Generating id...'
+                }</td>
             <td>{fullName}</td>
             <td>{email}</td>
             <td>{phone}</td>

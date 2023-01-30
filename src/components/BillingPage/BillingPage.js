@@ -9,7 +9,7 @@ const BillingPage = () => {
     const [allBillingList, setAllBillingList] = useState([]);
     const [searchItem, setSearchItem] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(10);
+    const [billingPerPage, setBillingPerPage] = useState(10);
 
     useEffect(() => {
         fetch('http://localhost:5000/billing-list')
@@ -64,9 +64,9 @@ const BillingPage = () => {
         }
     }
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = allBillingList.slice(indexOfFirstPost, indexOfLastPost);
+    const indexOfLastBilling = currentPage * billingPerPage;
+    const indexOfFirstBilling = indexOfLastBilling - billingPerPage;
+    const currentPosts = allBillingList.slice(indexOfFirstBilling, indexOfLastBilling);
 
     const paginate = (pageNumber) =>setCurrentPage(pageNumber);
 
@@ -163,8 +163,8 @@ const BillingPage = () => {
 
             <div>
                 <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={allBillingList.length}
+                    billingPerPage={billingPerPage}
+                    totalBilling={allBillingList.length}
                     paginate={paginate}></Pagination>
             </div>
         </div>

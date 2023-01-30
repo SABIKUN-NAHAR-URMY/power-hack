@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     const [allBillingList, setAllBillingList] = useState([]);
+    const [user, setUser] = useState([]);
     let sum = 0;
 
     useEffect(() => {
@@ -19,7 +20,7 @@ const Header = () => {
         <li className='text-xl'><Link to='/'>Home</Link></li>
         <li className='text-xl'><Link to='/billing-list'>BillingPage</Link></li>
         <li className='text-xl'><Link to='/login'>Login</Link></li>
-        <li className='text-xl'><Link to='/registration'>Register</Link></li>
+        <li className='text-xl'><Link to='/registration'>Registration</Link></li>
     </>
     return (
         <div className="navbar bg-base-100">
