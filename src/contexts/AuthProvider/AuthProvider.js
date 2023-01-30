@@ -9,7 +9,7 @@ const AuthProvider = ({children}) => {
 
 
     useEffect(()=>{
-         fetch('http://localhost:5000/users')
+         fetch('https://power-hack-server-seven.vercel.app/users')
         .then(res => res.json())
         .then(data => {
             setLoading(false);

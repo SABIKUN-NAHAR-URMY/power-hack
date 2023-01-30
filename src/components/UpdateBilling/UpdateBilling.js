@@ -9,7 +9,7 @@ const UpdateBilling = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/update-billing/${id}`)
+        fetch(`https://power-hack-server-seven.vercel.app/update-billing/${id}`)
             .then(res => res.json())
             .then(data => setEdit(data))
     }, [id]);
@@ -28,7 +28,7 @@ const UpdateBilling = () => {
             paidAmount: paidAmount
         }
 
-        fetch(`http://localhost:5000/update-billing/${id}`, {
+        fetch(`https://power-hack-server-seven.vercel.app/update-billing/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

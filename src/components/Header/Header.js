@@ -8,7 +8,7 @@ const Header = () => {
     let sum = 0;
 
     useEffect(() => {
-        fetch('http://localhost:5000/billing-list')
+        fetch('https://power-hack-server-seven.vercel.app/billing-list')
             .then(res => res.json())
             .then(data => setAllBillingList(data))
     }, []);

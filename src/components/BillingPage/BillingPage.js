@@ -12,7 +12,7 @@ const BillingPage = () => {
     const [billingPerPage, setBillingPerPage] = useState(10);
 
     useEffect(() => {
-        fetch('http://localhost:5000/billing-list')
+        fetch('https://power-hack-server-seven.vercel.app/billing-list')
             .then(res => res.json())
             .then(data => setAllBillingList(data))
     }, [])
@@ -27,7 +27,7 @@ const BillingPage = () => {
             dateAndTime: new Date()
         }
 
-        fetch('http://localhost:5000/add-billing', {
+        fetch('https://power-hack-server-seven.vercel.app/add-billing', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -48,7 +48,7 @@ const BillingPage = () => {
     const handelDelete = id => {
         const proceed = window.confirm('Are you sure you want to delete this review?');
         if (proceed) {
-            fetch(`http://localhost:5000/delete-billing/${id}`, {
+            fetch(`https://power-hack-server-seven.vercel.app/delete-billing/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
