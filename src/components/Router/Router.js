@@ -5,6 +5,7 @@ import Login from "../Login/Login";
 import Main from "../Main/Main";
 import Registration from "../Registration/Registration";
 import UpdateBilling from "../UpdateBilling/UpdateBilling";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -17,11 +18,11 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/billing-list',
-                element: <BillingPage></BillingPage>
+                element: <PrivateRoute><BillingPage></BillingPage></PrivateRoute>
             },
             {
                 path:'/update-billing/:id',
-                element: <UpdateBilling></UpdateBilling>
+                element: <PrivateRoute><UpdateBilling></UpdateBilling></PrivateRoute>
             },
             {
                 path:'/registration',

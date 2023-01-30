@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Registration = () => {
     const navigate = useNavigate();
+    const { users, setCurrentUser } = useContext(AuthContext);
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const handelRegistration = (event) => {
         event.preventDefault();
@@ -27,50 +31,59 @@ const Registration = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // localStorage.setItem('token', data.token);
-                // navigate(from, { replace: true });
-                // window.location.reload();
                 console.log(data);
-                toast.success('Registration successfully!');
-                navigate('/');
+                if (data.acknowledged) {
+                    toast.success('Registration successfully!');
+                    users.map(user => {
+                        if(user?.email === email && user?.password === password){
+                            setCurrentUser(user.email);
+                           return navigate('/');
+                        }})
+                }
+                else {
+                    toast.error('Already Registration!');
+                }
+
+                // navigate('/');
+                navigate(from, { replace: true });
             })
-            .catch (error => console.error(error))
+            .catch(error => console.error(error))
     }
 
-return (
-    <div className="w-96 mx-auto">
+    return (
+        <div className="w-96 mx-auto">
 
-        <div className="card w-full shadow-2xl bg-base-100">
-            <form onSubmit={handelRegistration} className="card-body">
-                <h1 className="text-5xl font-bold">Registration</h1>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                    </label>
-                    <input name="name" type="text" placeholder="name" className="input input-bordered" required />
-                </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
-                    <input name="email" type="text" placeholder="email" className="input input-bordered" required />
-                </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Password</span>
-                    </label>
-                    <input name="password" type="password" placeholder="password" className="input input-bordered" required />
+            <div className="card w-full shadow-2xl bg-base-100">
+                <form onSubmit={handelRegistration} className="card-body">
+                    <h1 className="text-5xl font-bold">Registration</h1>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Name</span>
+                        </label>
+                        <input name="name" type="text" placeholder="name" className="input input-bordered" required />
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Email</span>
+                        </label>
+                        <input name="email" type="text" placeholder="email" className="input input-bordered" required />
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Password</span>
+                        </label>
+                        <input name="password" type="password" placeholder="password" className="input input-bordered" required />
 
-                </div>
-                <div className="form-control mt-6">
-                    <input className="btn bg-slate-600" type="submit" value="Registration" />
-                </div>
+                    </div>
+                    <div className="form-control mt-6">
+                        <input className="btn bg-slate-600" type="submit" value="Registration" />
+                    </div>
 
-            </form>
-            <p className='text-center py-7'>Already have an account? <Link className='text-slate-600' to='/login'>Login</Link></p>
+                </form>
+                <p className='text-center py-7'>Already have an account? <Link className='text-slate-600' to='/login'>Login</Link></p>
+            </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default Registration;

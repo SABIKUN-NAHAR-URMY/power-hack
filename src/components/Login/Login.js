@@ -1,12 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const {users, setCurrentUser} = useContext(AuthContext);
+    console.log(users);
+    const navigate = useNavigate();
+
+    const handelLogin = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        users.map(user => {
+            if(user?.email === email && user?.password === password){
+                setCurrentUser(user.email);
+               return navigate('/');
+            }
+        })
+    }
+
     return (
         <div className="w-96 mx-auto">
 
         <div className="card w-full shadow-2xl bg-base-100">
-            <form className="card-body">
+            <form onSubmit={handelLogin} className="card-body">
                 <h1 className="text-5xl font-bold">Login</h1>
 
                 <div className="form-control">

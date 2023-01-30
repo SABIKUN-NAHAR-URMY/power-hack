@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Header = () => {
     const [allBillingList, setAllBillingList] = useState([]);
-    const [user, setUser] = useState([]);
+    const { currentUser, setCurrentUser} = useContext(AuthContext);
     let sum = 0;
 
     useEffect(() => {
@@ -12,6 +13,10 @@ const Header = () => {
             .then(data => setAllBillingList(data))
     }, []);
 
+    const handelLogOut = () =>{
+        setCurrentUser(null);
+    }
+
     const allPaidAmount = allBillingList.map(bill => bill.paidAmount);
 
     allPaidAmount.map(data => sum = sum + parseInt(data));
@@ -19,8 +24,16 @@ const Header = () => {
     const menuItem = <>
         <li className='text-xl'><Link to='/'>Home</Link></li>
         <li className='text-xl'><Link to='/billing-list'>BillingPage</Link></li>
-        <li className='text-xl'><Link to='/login'>Login</Link></li>
-        <li className='text-xl'><Link to='/registration'>Registration</Link></li>
+        {
+            currentUser ?
+                <li className='text-xl'><button onClick={handelLogOut}>Logout</button></li>
+
+                :
+                <>
+                    <li className='text-xl'><Link to='/login'>Login</Link></li>
+                    <li className='text-xl'><Link to='/registration'>Registration</Link></li>
+                </>
+        }
     </>
     return (
         <div className="navbar bg-base-100">

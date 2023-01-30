@@ -5,14 +5,19 @@ export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(()=>{
          fetch('http://localhost:5000/users')
         .then(res => res.json())
-        .then(data => setUsers(data))
+        .then(data => {
+            setLoading(false);
+            setUsers(data)
+        })
     },[])
 
-    const authInfo = {users, currentUser, setCurrentUser, setUsers};
+    const authInfo = {users, currentUser, setCurrentUser, setUsers, loading, setLoading};
 
     return (
         <AuthContext.Provider value={authInfo}>
