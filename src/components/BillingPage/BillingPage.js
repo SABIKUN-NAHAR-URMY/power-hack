@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import AllBillingList from '../AllBillingList/AllBillingList';
+import Pagination from '../Pagination/Pagination';
 
 const BillingPage = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [allBillingList, setAllBillingList] = useState([]);
     const [searchItem, setSearchItem] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(10);
 
     useEffect(() => {
         fetch('http://localhost:5000/billing-list')
@@ -60,6 +63,12 @@ const BillingPage = () => {
                 })
         }
     }
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = allBillingList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = (pageNumber) =>setCurrentPage(pageNumber);
 
     return (
         <div className='mx-20'>
@@ -135,11 +144,11 @@ const BillingPage = () => {
                         </thead>
                         <tbody>
                             {
-                                allBillingList.filter(val =>{
-                                    if(searchItem === ''){
+                                currentPosts.filter(val => {
+                                    if (searchItem === '') {
                                         return val;
                                     }
-                                    else if((val.fullName.toLowerCase().includes(searchItem.toLowerCase())) || (val.phone.includes(searchItem)) || (val.email.includes(searchItem)) ){
+                                    else if ((val.fullName.toLowerCase().includes(searchItem.toLowerCase())) || (val.phone.includes(searchItem)) || (val.email.includes(searchItem))) {
                                         return val;
                                     }
                                 }).map(billingList => <AllBillingList
@@ -150,6 +159,13 @@ const BillingPage = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div>
+                <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={allBillingList.length}
+                    paginate={paginate}></Pagination>
             </div>
         </div>
     );
